@@ -3,8 +3,15 @@ package com.google.sps;
 /** Puzzle domain object */
 public class Puzzle {
 
-  private String puzzleId; //Datastore generated id
-  private String image; // Blobstore url
+  /*
+  * Datastore generated id
+   */
+  private String puzzleId;
+  
+  /*
+  * Blobstore url
+   */
+  private String imageUrl; // Blobstore url
 
   public String getPuzzleId() {
     return this.puzzleId;
@@ -15,12 +22,12 @@ public class Puzzle {
     return this;
   }
 
-  public String getImage() {
-    return this.image;
+  public String getImageUrl() {
+    return this.imageUrl;
   }
 
-  public Puzzle setImage(String image) {
-    this.image = image;
+  public Puzzle setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
     return this;
   }
 }
