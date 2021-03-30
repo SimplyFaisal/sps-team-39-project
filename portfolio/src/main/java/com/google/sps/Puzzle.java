@@ -11,7 +11,7 @@ public class Puzzle {
   /*
   * Blobstore url
    */
-  private String imageUrl; // Blobstore url
+  private String imageUrl;
 
   public String getPuzzleId() {
     return this.puzzleId;
