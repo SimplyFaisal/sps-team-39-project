@@ -2,7 +2,7 @@ package com.google.sps;
 
 /** DAO Interface */
 public interface Dao<T> {
-  public void create(T obj);
+  public T create(T obj);
 
   public void update(T obj);
 
