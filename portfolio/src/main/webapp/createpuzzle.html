@@ -4,21 +4,48 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <script src="script.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   </head>
   <body>
     <div id="content">
-        <div id = "nav">
-            <nav>
-                <ul>
-                    <li>
-                        Home
-                    </li>
-                    <li>
-                        Create
-                    </li>
-                </ul>
-            </nav>
+        <nav id ="nav-bar" class="navbar navbar-expand-sm navbar-dark" style="background-color: #000000;">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active px-4 fs-5" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active px-4 fs-5" href="/createpuzzle">Create</a>
+                        <a class="nav-link active px-4 fs-5" href="#">Solve</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container w-25 py-4">
+            <div id="upload-success-message" class="pb-4"></div>
+            <!-- Form for users to send their image and select the difficulty of the puzzle-->
+            <form id="create-puzzle-form" action="/" method="POST">
+                <div class="form-group mb-3">
+                    <label for="puzzle-difficulty">Select Puzzle Difficulty</label>
+                    <select class="form-control" id="puzzle-difficulty" name="difficulty">
+                        <option>Easy</option>
+                        <option>Medium</option>
+                        <option>Hard</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input id="file-input" accept="image/*" type="file" class="form-control" aria-label="file example" required>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit" >Create Puzzle</button>
+                </div>                
+            </form>
         </div>
     </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>   
+    <script src="CreatePuzzle.js"></script>
   </body>
 </html>
