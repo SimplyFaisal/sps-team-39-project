@@ -38,11 +38,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-/** Temporary comment: The errors are because pom.xml is currently 
+/** Temporary comment: The errors are because pom.xml is currently missing
  * the necessary dependencies. This servlet currently is structured to take
  * in an image and upload it to the blobstore and then upload the the img link 
  * and some metadata into datastore. There is currently no method to actually
  * create a puzzle from the image.
+ */
+
+ /** Need to test this once the dependencies are put in pom.xml to make sure that
+  * the images are uploaded as expected. 
  */
 
 
@@ -80,6 +84,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
   /** Uploads a file to Cloud Storage and returns the uploaded file's URL. */
   private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
+    //Need to make sure that these values are the correct ones.
     String projectId = "simplyfaisal-sps-spring21";
     String bucketName = "simplyfaisal-sps-spring21.appspot.com";
     Storage storage =
