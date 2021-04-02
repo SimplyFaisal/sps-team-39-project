@@ -21,15 +21,9 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-import com.google.cloud.datastore.Datastore;
-import com.google.cloud.datastore.DatastoreOptions;
-import com.google.cloud.datastore.Entity;
-import com.google.cloud.datastore.FullEntity;
-import com.google.cloud.datastore.KeyFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+// import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -38,17 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-/** Temporary comment: The errors are because pom.xml is currently missing
- * the necessary dependencies. This servlet currently is structured to take
- * in an image and upload it to the blobstore and then upload the the img link 
- * and some metadata into datastore. There is currently no method to actually
- * create a puzzle from the image.
- */
-
- /** Need to test this once the dependencies are put in pom.xml to make sure that
-  * the images are uploaded as expected. 
- */
-
+import com.google.sps.Puzzle;
+import com.google.sps.PuzzleDao;
 
 /**
  * Takes an image submitted by the user and uploads it to Cloud Storage, and then displays it as
@@ -64,7 +49,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     /* Upload the image to blob store */
 
-    // Get the message entered by the user.
+    // Get the difficulty indicated by user.
     String difficulty = request.getParameter("difficulty");
 
     // Get the file chosen by the user.
@@ -72,13 +57,20 @@ public class CreatePuzzleServlet extends HttpServlet {
     String fileName = filePart.getSubmittedFileName();
     InputStream fileInputStream = filePart.getInputStream();
 
-    // Upload the file to blobstore and get its URL
+    // Upload the file to blobstore and get its URL.
     String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
 
-    // Upload the puzzle information to datastore
-    uploadToDatastore(uploadedFileUrl, difficulty);
+    //I think that Puzzle will need another field for difficulty
+    Puzzle puzzle = new Puzzle();
 
-    // Sends the user to view puzzle page
+    puzzle.setImageUrl(uploadedFileUrl);
+
+    PuzzleDao dao = new PuzzleDao();
+
+    //Need to double check that puzzle is passed by reference
+    dao.create(puzzle);
+
+    // Send the user to view puzzle page.
     response.sendRedirect("/ViewPuzzle"); 
   }
 
@@ -97,27 +89,6 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     // Return the uploaded file's URL.
     return blob.getMediaLink();
-  }
-
-  // This should handle creating the puzzle
-  private static String createPuzzle(String mediaLink) {
-    return "";
-  }
-
-  private static void uploadToDatastore(String uploadedFileUrl, String difficulty) {
-    /* Upload the image URL with additional parameters to datastore */
-    long timestamp = System.currentTimeMillis();
-
-    Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
-
-    KeyFactory keyFactory = datastore.newKeyFactory().setKind("Puzzle");
-    FullEntity taskEntity =
-        Entity.newBuilder(keyFactory.newKey())
-            .set("url", uploadedFileUrl)
-            .set("difficulty", difficulty)
-            .set("timestamp", timestamp)
-            .build();
-    datastore.put(taskEntity);
   }
 
 }
