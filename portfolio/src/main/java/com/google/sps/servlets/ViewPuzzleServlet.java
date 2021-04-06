@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-
+/** Handles requests to /puzzle url. */
 @WebServlet("/puzzle")
 public class ViewPuzzleServlet extends HttpServlet {
 
@@ -31,7 +31,7 @@ public class ViewPuzzleServlet extends HttpServlet {
       Long puzzleId = Long.parseLong(request.getParameter("id"));
       Puzzle puzzle = puzzleDao.read(puzzleId);
 
-      //converts puzzle into json only if a puzzle was was found
+      //converts puzzle into json only if a puzzle was found
       if(puzzle != null) {
         json = gson.toJson(puzzle);
       }
