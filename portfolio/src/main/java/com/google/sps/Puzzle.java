@@ -6,18 +6,18 @@ public class Puzzle {
   /*
   * Datastore generated id
    */
-  private String puzzleId;
+  private Long puzzleId;
   
   /*
   * Blobstore url
    */
   private String imageUrl;
 
-  public String getPuzzleId() {
+  public Long getPuzzleId() {
     return this.puzzleId;
   }
 
-  public Puzzle setPuzzleId(String puzzleId) {
+  public Puzzle setPuzzleId(Long puzzleId) {
     this.puzzleId = puzzleId;
     return this;
   }

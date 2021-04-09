@@ -6,7 +6,7 @@ public interface Dao<T> {
 
   public void update(T obj);
 
-  public T read(String id);
+  public T read(Long id);
 
-  public void delete(String id);
+  public void delete(Long id);
 }

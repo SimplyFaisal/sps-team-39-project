@@ -26,3 +26,20 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+async function requestPuzzle() {
+  //gets the url parameters
+  const params = new URLSearchParams(window.location.search);
+  
+  if(params.has('id')) {
+    //gets the id
+    const puzzleId = params.get('id');
+
+    //does a request to to get a json object with the puzzle data
+    const serverResponse = await fetch(`/puzzle?id=${puzzleId}`);
+    const responseObject = await serverResponse.json();
+
+    //here it should be rendered to the page
+    console.log(responseObject);
+  }  
+}
