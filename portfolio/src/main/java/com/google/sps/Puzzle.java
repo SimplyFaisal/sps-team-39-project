@@ -13,6 +13,11 @@ public class Puzzle {
    */
   private String imageUrl;
 
+  /*
+  * Difficulty of the puzzle
+  */
+  private String difficulty;
+
   public Long getPuzzleId() {
     return this.puzzleId;
   }
@@ -30,4 +35,14 @@ public class Puzzle {
     this.imageUrl = imageUrl;
     return this;
   }
+
+  public Puzzle setDifficulty(String difficulty) {
+    this.difficulty = difficulty;
+    return this;
+  }
+
+  public String getDifficulty() {
+      return this.difficulty;
+  }
+
 }
