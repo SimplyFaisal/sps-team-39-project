@@ -23,25 +23,28 @@
                 </div>
             </div>
         </nav>
-        <div class="container w-25 py-4">
-            <div id="upload-success-message" class="pb-4"></div>
-            <!-- Form for users to send their image and select the difficulty of the puzzle-->
-            <form id="create-puzzle-form" action="/" method="POST">
-                <div class="form-group mb-3">
-                    <label for="puzzle-difficulty">Select Puzzle Difficulty</label>
-                    <select class="form-control" id="puzzle-difficulty" name="difficulty">
-                        <option>Easy</option>
-                        <option>Medium</option>
-                        <option>Hard</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input id="file-input" accept="image/*" type="file" class="form-control" aria-label="file example" required>
-                </div>
-                <div class="mb-3">
-                    <button class="btn btn-primary" type="submit" >Create Puzzle</button>
-                </div>                
-            </form>
+        
+        <div class="container w-100 py-4">
+            <div class="container w-25 py-4">
+                <div id="upload-message" class="pb-4 d-none"></div>
+                <!-- Form for users to send their image and select the difficulty of the puzzle-->
+                <form id="create-puzzle-form" action="/upload" method="POST">
+                    <div class="form-group mb-3">
+                        <label for="puzzle-difficulty">Select Puzzle Difficulty</label>
+                        <select class="form-control" id="puzzle-difficulty" name="difficulty">
+                            <option>Easy</option>
+                            <option>Medium</option>
+                            <option>Hard</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input id="file-input" accept="image/*" type="file" class="form-control" aria-label="file example" name ="image" required>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit" >Create Puzzle</button>
+                    </div>                
+                </form>
+            </div>
         </div>
     </div>
     <!-- Bootstrap JS -->
