@@ -48,8 +48,6 @@ public class CreatePuzzleServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    /* Upload the image to blob store */
-
     // Get the difficulty indicated by user.
     String difficulty = request.getParameter("difficulty");
 
@@ -69,7 +67,6 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     PuzzleDao dao = new PuzzleDao();
 
-    //Need to double check that puzzle is passed by reference
     puzzle = dao.create(puzzle);
 
     // Long puzzleId = puzzle.getPuzzleId();
