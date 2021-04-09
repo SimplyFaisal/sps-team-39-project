@@ -13,7 +13,9 @@ const handleCreatePuzzleFormSubmission = (e) =>{
 async function getPuzzleLink () {
     try{
         const response = await fetch("/upload");
-        const text = await response.json();
+        const puzzle = await response.json();
+        //Creating the URL to the viewpuzzlepage based on the server response
+        const viewPuzzlePageUrl = `/viewpuzzlepage.html?id={puzzle.puzzleId}`;
 
         //constructing the success message
         const message = document.createElement("p");
@@ -22,8 +24,8 @@ async function getPuzzleLink () {
 
         //constructing the link to the puzzle
         const link = document.createElement("a");
-        link.href = text;
-        link.innerText = `${text}`;
+        link.href = viewPuzzlePageUrl;
+        link.innerText = `${viewPuzzlePageUrl}`;
         link.classList.add("d-block", "mx-auto","text-center","pb-2");
 
         //Add both message and link nodes as children of the 'upload-message' div 
