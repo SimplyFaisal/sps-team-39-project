@@ -64,14 +64,18 @@ public class CreatePuzzleServlet extends HttpServlet {
     Puzzle puzzle = new Puzzle();
 
     puzzle.setImageUrl(uploadedFileUrl);
+    puzzle.setDifficulty(difficulty);
 
     PuzzleDao dao = new PuzzleDao();
 
     //Need to double check that puzzle is passed by reference
     dao.create(puzzle);
 
+    Long puzzleId = puzzle.getPuzzleId();
+    String redirectURL = "/ViewPuzzle?puzzleid=%s" + String.valueOf(puzzleId);
+    
     // Send the user to view puzzle page.
-    response.sendRedirect("/ViewPuzzle"); 
+    response.sendRedirect(redirectURL); 
   }
 
   /** Uploads a file to Cloud Storage and returns the uploaded file's URL. */
