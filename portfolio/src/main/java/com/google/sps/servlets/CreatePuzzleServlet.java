@@ -20,6 +20,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,22 +61,23 @@ public class CreatePuzzleServlet extends HttpServlet {
     // Upload the file to blobstore and get its URL.
     String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
 
-    //I think that Puzzle will need another field for difficulty
     Puzzle puzzle = new Puzzle();
 
     puzzle.setImageUrl(uploadedFileUrl);
+    //Probably need to add in some error checking
     puzzle.setDifficulty(difficulty);
 
     PuzzleDao dao = new PuzzleDao();
 
     //Need to double check that puzzle is passed by reference
-    dao.create(puzzle);
+    puzzle = dao.create(puzzle);
 
-    Long puzzleId = puzzle.getPuzzleId();
-    String redirectURL = "/ViewPuzzle?puzzleid=%s" + String.valueOf(puzzleId);
+    // Long puzzleId = puzzle.getPuzzleId();
+    // String redirectURL = "/ViewPuzzle?id=%s" + String.valueOf(puzzleId);
     
     // Send the user to view puzzle page.
-    response.sendRedirect(redirectURL); 
+    response.setContentType("application/json;");
+    response.getWriter().println(new Gson().toJson(puzzle));
   }
 
   /** Uploads a file to Cloud Storage and returns the uploaded file's URL. */
