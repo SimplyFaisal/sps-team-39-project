@@ -84,7 +84,6 @@ public class CreatePuzzleServlet extends HttpServlet {
 
   /** Uploads a file to Cloud Storage and returns the uploaded file's URL. */
   private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
-    //Need to make sure that these values are the correct ones.
     String projectId = "simplyfaisal-sps-spring21";
     String bucketName = "simplyfaisal-sps-spring21.appspot.com";
     Storage storage =
