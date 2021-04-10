@@ -16,13 +16,13 @@ public class Puzzle {
   /*
   * Difficulty of the puzzle
   */
-  enum difficultyEnum {
-      Easy,
-      Medium,
-      Hard
+  enum Difficulty {
+      EASY,
+      MEDIUM,
+      HARD
   }
-
-  private difficultyEnum difficulty;
+  
+  private Difficulty difficulty;
 
   public Long getPuzzleId() {
     return this.puzzleId;
