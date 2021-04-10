@@ -49,7 +49,13 @@ public class CreatePuzzleServlet extends HttpServlet {
       throws ServletException, IOException {
 
     // Get the difficulty indicated by user.
-    String difficulty = request.getParameter("difficulty");
+    Puzzle.Difficulty difficulty;
+    try {
+        difficulty = Puzzle.Difficulty.valueOf(request.getParameter("difficulty"));
+    } catch (IllegalArgumentException e) {
+        response.getWriter().println("Invalid value for difficulty");
+        return;
+    }
 
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
@@ -62,7 +68,6 @@ public class CreatePuzzleServlet extends HttpServlet {
     Puzzle puzzle = new Puzzle();
 
     puzzle.setImageUrl(uploadedFileUrl);
-    //Probably need to add in some error checking
     puzzle.setDifficulty(difficulty);
 
     PuzzleDao dao = new PuzzleDao();

@@ -16,7 +16,7 @@ public class Puzzle {
   /*
   * Difficulty of the puzzle
   */
-  enum Difficulty {
+  public enum Difficulty {
       EASY,
       MEDIUM,
       HARD
@@ -42,12 +42,12 @@ public class Puzzle {
     return this;
   }
 
-  public Puzzle setDifficulty(String difficulty) {
-    this.difficulty = difficultyEnum.valueOf(difficulty);
+  public Puzzle setDifficulty(Difficulty difficulty) {
+    this.difficulty = difficulty;
     return this;
   }
 
-  public difficultyEnum getDifficulty() {
+  public Difficulty getDifficulty() {
       return this.difficulty;
   }
 
