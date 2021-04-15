@@ -51,8 +51,7 @@ public class CreatePuzzleServlet extends HttpServlet {
     // Get the difficulty indicated by user.
     Puzzle.Difficulty difficulty;
     try {
-        String diff = request.getParameter("difficulty").toUpperCase();
-        difficulty = Puzzle.Difficulty.valueOf(diff);
+        difficulty = Puzzle.Difficulty.valueOf(request.getParameter("difficulty"));
     } catch (IllegalArgumentException e) {
         response.getWriter().println("Invalid value for difficulty");
         return;
