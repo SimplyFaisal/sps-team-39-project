@@ -51,7 +51,8 @@ public class CreatePuzzleServlet extends HttpServlet {
     // Get the difficulty indicated by user.
     Puzzle.Difficulty difficulty;
     try {
-        difficulty = Puzzle.Difficulty.valueOf(request.getParameter("difficulty"));
+        String diff = request.getParameter("difficulty").toUpperCase();
+        difficulty = Puzzle.Difficulty.valueOf(diff);
     } catch (IllegalArgumentException e) {
         response.getWriter().println("Invalid value for difficulty");
         return;
@@ -59,7 +60,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
-    String fileName = filePart.getSubmittedFileName();
+    String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName() ;
     InputStream fileInputStream = filePart.getInputStream();
 
     // Upload the file to blobstore and get its URL.

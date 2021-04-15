@@ -4,18 +4,23 @@ const responseMessage = document.getElementById("upload-message");
 //Handles the Create Puzzle Form Submission
 const handleCreatePuzzleFormSubmission = (e) =>{
     e.preventDefault();
-    createPuzzleForm.reset();
 
     //Getting the link to the newly created puzzle
     getPuzzleLink();
+
+    createPuzzleForm.reset();
 }
 
 async function getPuzzleLink () {
-    try{
-        const response = await fetch("/upload");
+    const data = new FormData(createPuzzleForm);
+    try {
+        const response = await fetch("/upload",  {
+            method: 'POST',
+            body: data
+        });
         const puzzle = await response.json();
         //Creating the URL to the viewpuzzlepage based on the server response
-        const viewPuzzlePageUrl = `/viewpuzzlepage.html?id={puzzle.puzzleId}`;
+        const viewPuzzlePageUrl = `/viewpuzzlepage?id=${puzzle.puzzleId}`;
 
         //constructing the success message
         const message = document.createElement("p");
