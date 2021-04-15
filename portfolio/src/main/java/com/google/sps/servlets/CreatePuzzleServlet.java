@@ -20,6 +20,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,10 +48,14 @@ public class CreatePuzzleServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    /* Upload the image to blob store */
-
     // Get the difficulty indicated by user.
-    String difficulty = request.getParameter("difficulty");
+    Puzzle.Difficulty difficulty;
+    try {
+        difficulty = Puzzle.Difficulty.valueOf(request.getParameter("difficulty"));
+    } catch (IllegalArgumentException e) {
+        response.getWriter().println("Invalid value for difficulty");
+        return;
+    }
 
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
@@ -60,7 +65,6 @@ public class CreatePuzzleServlet extends HttpServlet {
     // Upload the file to blobstore and get its URL.
     String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
 
-    //I think that Puzzle will need another field for difficulty
     Puzzle puzzle = new Puzzle();
 
     puzzle.setImageUrl(uploadedFileUrl);
@@ -68,19 +72,15 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     PuzzleDao dao = new PuzzleDao();
 
-    //Need to double check that puzzle is passed by reference
-    dao.create(puzzle);
-
-    Long puzzleId = puzzle.getPuzzleId();
-    String redirectURL = "/ViewPuzzle?puzzleid=%s" + String.valueOf(puzzleId);
+    puzzle = dao.create(puzzle);
     
     // Send the user to view puzzle page.
-    response.sendRedirect(redirectURL); 
+    response.setContentType("application/json;");
+    response.getWriter().println(new Gson().toJson(puzzle));
   }
 
   /** Uploads a file to Cloud Storage and returns the uploaded file's URL. */
   private static String uploadToCloudStorage(String fileName, InputStream fileInputStream) {
-    //Need to make sure that these values are the correct ones.
     String projectId = "simplyfaisal-sps-spring21";
     String bucketName = "simplyfaisal-sps-spring21.appspot.com";
     Storage storage =
