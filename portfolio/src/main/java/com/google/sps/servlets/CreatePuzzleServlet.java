@@ -73,9 +73,6 @@ public class CreatePuzzleServlet extends HttpServlet {
     PuzzleDao dao = new PuzzleDao();
 
     puzzle = dao.create(puzzle);
-
-    // Long puzzleId = puzzle.getPuzzleId();
-    // String redirectURL = "/ViewPuzzle?id=%s" + String.valueOf(puzzleId);
     
     // Send the user to view puzzle page.
     response.setContentType("application/json;");
