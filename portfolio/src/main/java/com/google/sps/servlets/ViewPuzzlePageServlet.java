@@ -18,7 +18,8 @@ public class ViewPuzzlePageServlet extends HttpServlet {
       Long puzzleId = Long.parseLong(request.getParameter("id"));
       response.sendRedirect("viewpuzzle.html?id=" + puzzleId.toString());
     } catch(NumberFormatException e) {
-      //the id couldn't be parsed
+     response.setStatus(HttpServletResponse. SC_BAD_REQUEST);
+     response.getWriter().println("Invalid puzzleId");
     }
 
     response.sendRedirect("viewpuzzle.html");
