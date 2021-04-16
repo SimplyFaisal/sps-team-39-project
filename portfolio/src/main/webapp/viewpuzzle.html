@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <title>Solve</title>
     <script src="script.js"></script>
+    <script type="text/javascript" src="snapfit.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   </head>
@@ -26,8 +27,19 @@
         
       <div class="container w-100 py-4">
         <h1>Puzzle</h1>
+        <h6>Drag pieces to the correct spot! (double-click = rotate, righ-click = flip)</h6>
       <div class="container w-25 py-4">        
     </div>
+
+    <!--Display the puzzle-->
+    <div id="thisPuzzle"></div>
+
+    <!-- Display the success message -->
+    <div id="solved" style="display:none">
+        <h4>Amazing! You solved the puzzle!</h4>
+        <div id="downloadImg"></div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>   
   </body>
