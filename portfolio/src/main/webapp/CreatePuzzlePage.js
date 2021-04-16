@@ -13,8 +13,6 @@ const handleCreatePuzzleFormSubmission = (e) =>{
 
 async function getPuzzleLink () {
     const data = new FormData(createPuzzleForm);
-    const difficulty = data.get("difficulty");
-    data.set("difficulty", difficulty.toUpperCase());
 
     try {
         const response = await fetch("/upload",  {
