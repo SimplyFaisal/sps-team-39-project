@@ -59,7 +59,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
-    String fileName = filePart.getSubmittedFileName();
+    String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName() ;
     InputStream fileInputStream = filePart.getInputStream();
 
     // Upload the file to blobstore and get its URL.

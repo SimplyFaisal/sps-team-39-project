@@ -5,6 +5,7 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.FullEntity;
 import com.google.cloud.datastore.KeyFactory;
+import com.google.sps.Puzzle.Difficulty;
 
 /** Puzzle DAO implementation*/
 public class PuzzleDao implements Dao<Puzzle> {
@@ -23,6 +24,7 @@ public class PuzzleDao implements Dao<Puzzle> {
       FullEntity taskEntity =
         Entity.newBuilder(keyFactory.newKey())
           .set("imageUrl", puzzle.getImageUrl())
+          .set("difficulty", puzzle.getDifficulty().toString())
           .build();
       Entity entity = datastore.put(taskEntity);
 
@@ -40,6 +42,7 @@ public class PuzzleDao implements Dao<Puzzle> {
       Entity task = 
         Entity.newBuilder(datastore.get(keyFactory.newKey(puzzleId)))
           .set("imageUrl", puzzle.getImageUrl())
+          .set("difficulty", puzzle.getDifficulty().toString())
           .build();
       datastore.update(task);
     }
@@ -55,9 +58,11 @@ public class PuzzleDao implements Dao<Puzzle> {
       }
 
       //saves the retrieved data into a "Puzzle" object
+      Difficulty difficulty = Puzzle.Difficulty.valueOf(entity.getString("difficulty"));
       Puzzle puzzle = new Puzzle()
         .setPuzzleId(entity.getKey().getId())
-        .setImageUrl(entity.getString("imageUrl"));
+        .setImageUrl(entity.getString("imageUrl"))
+        .setDifficulty(difficulty);
 
       //returns the object
       return puzzle;
