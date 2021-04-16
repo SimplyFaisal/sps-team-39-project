@@ -21,7 +21,7 @@ async function getPuzzleLink () {
         });
         const puzzle = await response.json();
         //Creating the URL to the viewpuzzlepage based on the server response
-        const viewPuzzlePageUrl = `/viewpuzzlepage?id=${puzzle.puzzleId}`;
+        const viewPuzzlePageUrl = `/viewpuzzle?id=${puzzle.puzzleId}`;
 
         //constructing the success message
         const message = document.createElement("p");

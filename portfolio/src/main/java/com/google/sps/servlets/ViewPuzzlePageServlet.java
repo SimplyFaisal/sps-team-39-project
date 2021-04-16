@@ -14,14 +14,21 @@ public class ViewPuzzlePageServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
 
-    try {
-      Long puzzleId = Long.parseLong(request.getParameter("id"));
-      response.sendRedirect("viewpuzzle.html?id=" + puzzleId.toString());
-    } catch(NumberFormatException e) {
-     response.setStatus(HttpServletResponse. SC_BAD_REQUEST);
-     response.getWriter().println("Invalid puzzleId");
+    
+    String id = request.getParameter("id");
+    if(id == null) {
+      //if an id was not given
+      response.sendRedirect("viewpuzzle.html");
     }
 
-    response.sendRedirect("viewpuzzle.html");
+    try {
+      Long puzzleId = Long.parseLong(id);
+      //if an id was given
+      response.sendRedirect("viewpuzzle.html?id=" + puzzleId.toString());
+    } catch(NumberFormatException e) {
+      //the id couldn't be parsed
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      response.getWriter().println("Invalid puzzleId");
+    }
   }
 }
