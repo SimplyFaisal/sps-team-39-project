@@ -24,7 +24,7 @@ public class Puzzle {
   
   private Difficulty difficulty;
 
-  private String name;
+  private String name = "";
 
   public Long getPuzzleId() {
     return this.puzzleId;

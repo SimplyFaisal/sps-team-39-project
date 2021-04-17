@@ -71,6 +71,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     puzzle.setImageUrl(uploadedFileUrl);
     puzzle.setDifficulty(difficulty);
+    puzzle.setName(name);
 
     PuzzleDao dao = new PuzzleDao();
 
