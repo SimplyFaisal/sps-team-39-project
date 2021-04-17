@@ -27,8 +27,12 @@
         <div class="container w-100 py-4">
             <div class="container w-25 py-4">
                 <div id="upload-message" class="pb-4 d-none"></div>
-                <!-- Form for users to send their image and select the difficulty of the puzzle-->
+                <!-- Form for users to send their image and select the difficulty of the puzzle-->                
                 <form id="create-puzzle-form" action="/upload" method="POST">
+                    <div class="mb-3">
+                        <label for="name">Enter Your Name</label>
+                        <input type="text" id="name" name="name" maxlength="24" required>
+                    </div>
                     <div class="form-group mb-3">
                         <label for="puzzle-difficulty">Select Puzzle Difficulty</label>
                         <select class="form-control" id="puzzle-difficulty" name="difficulty">

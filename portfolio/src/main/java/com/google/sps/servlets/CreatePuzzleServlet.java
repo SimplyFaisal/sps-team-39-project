@@ -57,6 +57,8 @@ public class CreatePuzzleServlet extends HttpServlet {
         return;
     }
 
+    String name = request.getParameter("name");
+
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
     String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName() ;
