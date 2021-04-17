@@ -26,28 +26,37 @@ async function requestPuzzle() {
 
     //here it should be rendered to the page
     console.log(responseObject);
-    
-    const puzzlePage = document.getElementById("thisPuzzle");
-    const puzzleDifficulty = responseObject.difficulty;
-    const puzzleImage = responseObject.imageUrl;
 
-    if (puzzleDifficulty == "EASY"){
-        puzzlePage.innerHTML = `<img src=${puzzleImage} onLoad="snapfit.add((this), {level:1, mixed:true, snap:12, nokeys:true, aborder:true, polygon:true, aimage:true, aopacity: 0.3, space:15, callback:function(){solvedPuzzle()} });" width="750">`;
+    const imageEl = document.getElementById("puzzle-image");
+    imageEl.src = responseObject.imageUrl;
+
+    const DIFFICULTY_TO_LEVEL = {
+        "EASY": 1,
+        "MEDIUM": 3,
+        "HARD": 5
+    };
+
+    const settings = { 
+        level: DIFFICULTY_TO_LEVEL[responseObject.difficulty],
+        mixed: true, 
+        snap: 12, 
+        nokeys: true, 
+        aborder: true, 
+        polygon: true, 
+        aimage: true, 
+        aopacity: 0.3, 
+        space: 15, 
+        callback: function(){solvedPuzzle()}
+    };
+
+    imageEl.onload = function() {
+        snapfit.add(imageEl, settings);
     }
 
-    if (puzzleDifficulty == "MEDIUM"){
-        puzzlePage.innerHTML = `<img src=${puzzleImage} onLoad="snapfit.add((this), {level:3, mixed:true, snap:12, nokeys:true, aborder:true, polygon:true, aimage:true, aopacity: 0.3, space:15, callback:function(){solvedPuzzle()} });" width="750">`;
-    }
-
-    if (puzzleDifficulty == "HARD"){
-        puzzlePage.innerHTML = `<img src=${puzzleImage} onLoad="snapfit.add((this), {level:5, mixed:true, snap:12, nokeys:true, aborder:true, polygon:true, aimage:true, aopacity: 0.3, space:15, callback:function(){solvedPuzzle()} });" width="750">`;
-    }
-
-    //link to image download after solved
-    document.getElementById("downloadImg").innerHTML = `<a href="${puzzleImage}">Click here to download image!</a>`;
+    document.getElementById("downloadImg").innerHTML = `<a href="${responseObject.imageUrl}">Click here to download image!</a>`;
   }  
 }
 
-async function solvedPuzzle(){
+function solvedPuzzle(){
     document.getElementById("solved").style.display = "block";
 }
