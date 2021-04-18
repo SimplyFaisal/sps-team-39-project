@@ -25,15 +25,15 @@
         </div>
       </nav>
         
-      <div class="container w-100 py-4">
-        <h1>Puzzle</h1>
+      <div class="container w-100 py-4 row">
+        <h1 id="puzzle-name">Puzzle</h1>
         <h6>Drag pieces to the correct spot! (double-click = rotate, righ-click = flip)</h6>
       <div class="container w-25 py-4">        
     </div>
 
     <!--Display the puzzle-->
     <div>
-        <img id="puzzle-image" onLoad="snapfit.add((this), {level:1, mixed:true, snap:12, nokeys:true, aborder:true, polygon:true, aimage:true, aopacity: 0.3, space:15, callback:function(){solvedPuzzle()} });" width="750">
+        <img id="puzzle-image" width="750" />
     </div>
 
     <!-- Display the success message -->

@@ -46,13 +46,14 @@ async function requestPuzzle() {
         aimage: true, 
         aopacity: 0.3, 
         space: 15, 
-        callback: function(){solvedPuzzle()}
+        callback: solvedPuzzle
     };
 
     imageEl.onload = function() {
         snapfit.add(imageEl, settings);
     }
 
+    document.getElementById("puzzle-name").innerHTML = `Puzzle – ${responseObject.name}`;
     document.getElementById("downloadImg").innerHTML = `<a href="${responseObject.imageUrl}">Click here to download image!</a>`;
   }  
 }
