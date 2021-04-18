@@ -26,5 +26,37 @@ async function requestPuzzle() {
 
     //here it should be rendered to the page
     console.log(responseObject);
+
+    const imageEl = document.getElementById("puzzle-image");
+    imageEl.src = responseObject.imageUrl;
+
+    const DIFFICULTY_TO_LEVEL = {
+        "EASY": 1,
+        "MEDIUM": 3,
+        "HARD": 5
+    };
+
+    const settings = { 
+        level: DIFFICULTY_TO_LEVEL[responseObject.difficulty],
+        mixed: true, 
+        snap: 12, 
+        nokeys: true, 
+        aborder: true, 
+        polygon: true, 
+        aimage: true, 
+        aopacity: 0.3, 
+        space: 15, 
+        callback: function(){solvedPuzzle()}
+    };
+
+    imageEl.onload = function() {
+        snapfit.add(imageEl, settings);
+    }
+
+    document.getElementById("downloadImg").innerHTML = `<a href="${responseObject.imageUrl}">Click here to download image!</a>`;
   }  
+}
+
+function solvedPuzzle(){
+    document.getElementById("solved").style.display = "block";
 }
