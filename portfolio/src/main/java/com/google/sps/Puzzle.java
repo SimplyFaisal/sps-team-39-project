@@ -24,6 +24,8 @@ public class Puzzle {
   
   private Difficulty difficulty;
 
+  private String name = "";
+
   public Long getPuzzleId() {
     return this.puzzleId;
   }
@@ -49,6 +51,15 @@ public class Puzzle {
 
   public Difficulty getDifficulty() {
       return this.difficulty;
+  }
+
+  public Puzzle setName(String name) {
+      this.name = name;
+      return this;
+  }
+
+  public String getName() {
+      return this.name;
   }
 
 }

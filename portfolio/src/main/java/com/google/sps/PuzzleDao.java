@@ -25,6 +25,7 @@ public class PuzzleDao implements Dao<Puzzle> {
         Entity.newBuilder(keyFactory.newKey())
           .set("imageUrl", puzzle.getImageUrl())
           .set("difficulty", puzzle.getDifficulty().toString())
+          .set("name", puzzle.getName())
           .build();
       Entity entity = datastore.put(taskEntity);
 
@@ -43,6 +44,7 @@ public class PuzzleDao implements Dao<Puzzle> {
         Entity.newBuilder(datastore.get(keyFactory.newKey(puzzleId)))
           .set("imageUrl", puzzle.getImageUrl())
           .set("difficulty", puzzle.getDifficulty().toString())
+          .set("name", puzzle.getName())
           .build();
       datastore.update(task);
     }
@@ -59,10 +61,20 @@ public class PuzzleDao implements Dao<Puzzle> {
 
       //saves the retrieved data into a "Puzzle" object
       Difficulty difficulty = Puzzle.Difficulty.valueOf(entity.getString("difficulty"));
+
+      String name;
+
+      try {
+          name = entity.getString("name");
+      } catch (DatastoreException e) {
+          name = "";
+      }
+
       Puzzle puzzle = new Puzzle()
         .setPuzzleId(entity.getKey().getId())
         .setImageUrl(entity.getString("imageUrl"))
-        .setDifficulty(difficulty);
+        .setDifficulty(difficulty)
+        .setName(name);
 
       //returns the object
       return puzzle;

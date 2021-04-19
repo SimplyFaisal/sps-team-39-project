@@ -57,6 +57,8 @@ public class CreatePuzzleServlet extends HttpServlet {
         return;
     }
 
+    String name = request.getParameter("name");
+
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
     String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName() ;
@@ -69,6 +71,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     puzzle.setImageUrl(uploadedFileUrl);
     puzzle.setDifficulty(difficulty);
+    puzzle.setName(name);
 
     PuzzleDao dao = new PuzzleDao();
 
