@@ -66,7 +66,7 @@ public class PuzzleDao implements Dao<Puzzle> {
 
       try {
           name = entity.getString("name");
-      } catch (Exception e) {
+      } catch (DatastoreException e) {
           name = "";
       }
 
