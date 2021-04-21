@@ -23,7 +23,7 @@ public class ListPuzzlesServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String cursorUrl = request.getParameter("cursor");
-    String json = gson.toJson(puzzleDao.listPuzzles(cursorUrl, 2));
+    String json = gson.toJson(puzzleDao.listPuzzles(cursorUrl, 10));
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
