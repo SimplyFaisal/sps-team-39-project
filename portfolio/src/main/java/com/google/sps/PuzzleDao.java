@@ -1,6 +1,7 @@
 package com.google.sps;
 
 import com.google.cloud.datastore.Datastore;
+import com.google.cloud.datastore.DatastoreException;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.FullEntity;
@@ -26,6 +27,7 @@ public class PuzzleDao implements Dao<Puzzle> {
           .set("imageUrl", puzzle.getImageUrl())
           .set("difficulty", puzzle.getDifficulty().toString())
           .set("name", puzzle.getName())
+          .set("username", puzzle.getUsername())
           .build();
       Entity entity = datastore.put(taskEntity);
 
@@ -45,6 +47,7 @@ public class PuzzleDao implements Dao<Puzzle> {
           .set("imageUrl", puzzle.getImageUrl())
           .set("difficulty", puzzle.getDifficulty().toString())
           .set("name", puzzle.getName())
+          .set("username", puzzle.getUsername())
           .build();
       datastore.update(task);
     }
@@ -70,11 +73,20 @@ public class PuzzleDao implements Dao<Puzzle> {
           name = "";
       }
 
+      String username;
+
+      try {
+          username = entity.getString("name");
+      } catch (DatastoreException e) {
+          username = "";
+      }      
+
       Puzzle puzzle = new Puzzle()
         .setPuzzleId(entity.getKey().getId())
         .setImageUrl(entity.getString("imageUrl"))
         .setDifficulty(difficulty)
-        .setName(name);
+        .setName(name)
+        .setUsername(username);
 
       //returns the object
       return puzzle;
