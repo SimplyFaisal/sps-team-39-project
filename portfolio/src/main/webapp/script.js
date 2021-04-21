@@ -61,3 +61,30 @@ async function requestPuzzle() {
 function solvedPuzzle(){
     document.getElementById("solved").style.display = "block";
 }
+
+let cursorUrl = "";
+async function listPuzzles() {
+    //does a request
+    const serverResponse = await fetch(`/listpuzzles?cursor=${cursorUrl}`);
+    const responseObject = await serverResponse.json();
+
+    //adds a row to the table
+    const puzzles =  responseObject.puzzles;
+    const puzzleTable = document.getElementById("puzzle-table");
+    if(puzzles.length > 0) {
+      puzzleTable.innerHTML = "";
+      puzzles.forEach(puzzle => {
+        const puzzleName = `<td>${puzzle.name}</td>`;
+        const puzzleDifficulty = `<td>${puzzle.difficulty}</td>`;
+        const puzzleUrl = `<td><a href="/viewpuzzle?id=${puzzle.puzzleId}">Link</a></td>`;
+        const puzzleImageUrl = `<td><img src="${puzzle.imageUrl}"></td>`;
+
+        const tr = document.createElement("tr");
+          tr.innerHTML = puzzleName + puzzleDifficulty + puzzleUrl + puzzleImageUrl;
+          puzzleTable.appendChild(tr);
+      });
+    }
+    
+    //updates cursorUrl
+    cursorUrl = responseObject.cursorUrl;
+}
