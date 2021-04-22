@@ -71,12 +71,7 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     Puzzle puzzle = new Puzzle();
 
-    //Will the puzzleId ever be -1L in a normal circumstance?
     puzzle.create(-1L, uploadedFileUrl, difficulty, name, username);
-    // puzzle.setImageUrl(uploadedFileUrl);
-    // puzzle.setDifficulty(difficulty);
-    // puzzle.setName(name);
-    // puzzle.setUsername(username);
 
     PuzzleDao dao = new PuzzleDao();
 
