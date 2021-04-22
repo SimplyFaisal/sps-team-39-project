@@ -82,11 +82,11 @@ public class PuzzleDao implements Dao<Puzzle> {
       }      
 
       Puzzle puzzle = new Puzzle()
-        .setPuzzleId(entity.getKey().getId())
-        .setImageUrl(entity.getString("imageUrl"))
-        .setDifficulty(difficulty)
-        .setName(name)
-        .setUsername(username);
+        .create(entity.getKey().getId(), 
+                entity.getString("imageUrl"), 
+                difficulty, 
+                name, 
+                username);
 
       //returns the object
       return puzzle;
