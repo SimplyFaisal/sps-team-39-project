@@ -78,10 +78,11 @@ async function listPuzzles() {
         const puzzleName = `<td>${puzzle.name}</td>`;
         const puzzleDifficulty = `<td>${puzzle.difficulty}</td>`;
         const puzzleUrl = `<td><a href="/viewpuzzle?id=${puzzle.puzzleId}">Link</a></td>`;
-        const puzzleImageUrl = `<td><img src="${puzzle.imageUrl}"></td>`;
+        const puzzleImage = `<td><img src="${puzzle.imageUrl}"></td>`;
+        const username = `<td>${puzzle.username}</td>`;
 
         const tr = document.createElement("tr");
-          tr.innerHTML = puzzleName + puzzleDifficulty + puzzleUrl + puzzleImageUrl;
+          tr.innerHTML = puzzleName + username + puzzleDifficulty + puzzleImage + puzzleUrl ;
           puzzleTable.appendChild(tr);
       });
     }
