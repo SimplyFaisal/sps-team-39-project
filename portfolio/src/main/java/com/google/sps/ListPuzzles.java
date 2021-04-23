@@ -7,7 +7,7 @@ public class ListPuzzles {
   private List<Puzzle> puzzles;
   private String cursorUrl;
 
-  public ListPuzzles(ArrayList<Puzzle> puzzles, String cursorUrl) {
+  public ListPuzzles(List<Puzzle> puzzles, String cursorUrl) {
     this.puzzles = puzzles;
     this.cursorUrl = cursorUrl;
   }
