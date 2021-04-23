@@ -57,44 +57,22 @@ public class PuzzleDao implements Dao<Puzzle> {
       //reads the entity whose id match "puzzleID"
       Entity entity = datastore.get(keyFactory.newKey(puzzleId));
 
-      //id was not found
-      if(entity == null) {
-        return null;
-      }
-
-      //saves the retrieved data into a "Puzzle" object
-      Difficulty difficulty = Puzzle.Difficulty.valueOf(entity.getString("difficulty"));
-
-      String name;
-
-      try {
-          name = entity.getString("name");
-      } catch (DatastoreException e) {
-          name = "";
-      }
-
-      String username;
-
-      try {
-          username = entity.getString("name");
-      } catch (DatastoreException e) {
-          username = "";
-      }      
-
-      Puzzle puzzle = new Puzzle()
-        .create(entity.getKey().getId(), 
-                entity.getString("imageUrl"), 
-                difficulty, 
-                name, 
-                username);
-
-      //returns the object
-      return puzzle;
+      //Return null if there was no matching entity or the puzzle object
+      return entity != null ? getPuzzleFrom(entity) : null;
     }
 
     @Override
     public void delete(Long puzzleId) {
       //deletes the entity whose id match "puzzleID"
       datastore.delete(keyFactory.newKey(puzzleId));
+    }
+
+    private Puzzle getPuzzleFrom(Entity entity) {
+        return new Puzzle()
+            .setPuzzleId(entity.getKey().getId())
+            .setImageUrl(entity.getString("imageUrl"))
+            .setDifficulty(Puzzle.Difficulty.valueOf(entity.getString("difficulty")))
+            .setName(entity.contains("name") ? entity.getString("name") : "")
+            .setUsername(entity.contains("username") ? entity.getString("username") : "");
     }
 }
