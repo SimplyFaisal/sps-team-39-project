@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ListPuzzles {
 
-  private ArrayList<Puzzle> puzzles;
+  private List<Puzzle> puzzles;
   private String cursorUrl;
 
   public ListPuzzles(ArrayList<Puzzle> puzzles, String cursorUrl) {
