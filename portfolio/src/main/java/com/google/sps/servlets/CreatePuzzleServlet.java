@@ -69,9 +69,11 @@ public class CreatePuzzleServlet extends HttpServlet {
     // Upload the file to blobstore and get its URL.
     String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
 
-    Puzzle puzzle = new Puzzle();
-
-    puzzle.create(-1L, uploadedFileUrl, difficulty, name, username);
+    Puzzle puzzle = new Puzzle()
+        .setImageUrl(uploadedFileUrl)
+        .setDifficulty(difficulty)
+        .setName(name)
+        .setUsername(username);
 
     PuzzleDao dao = new PuzzleDao();
 
