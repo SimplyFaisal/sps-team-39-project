@@ -26,6 +26,17 @@ public class Puzzle {
 
   private String name = "";
 
+  private String username = "";
+
+  public Puzzle create(Long puzzleId, String imageUrl, Difficulty difficulty, String name, String username) {
+      if (puzzleId != -1L) this.puzzleId = puzzleId;
+      this.imageUrl = imageUrl;
+      this.difficulty = difficulty;
+      this.name = name;
+      this.username = username;
+      return this;
+  }
+
   public Long getPuzzleId() {
     return this.puzzleId;
   }
@@ -60,6 +71,15 @@ public class Puzzle {
 
   public String getName() {
       return this.name;
+  }
+
+  public Puzzle setUsername(String username) {
+      this.username = username;
+      return this;
+  }
+
+  public String getUsername() {
+    return this.username;
   }
 
 }
