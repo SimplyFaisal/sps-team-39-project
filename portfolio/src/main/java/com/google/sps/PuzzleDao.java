@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.google.cloud.datastore.Cursor;
 import com.google.cloud.datastore.Datastore;
-import com.google.cloud.datastore.DatastoreException;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.EntityQuery;
@@ -12,7 +11,6 @@ import com.google.cloud.datastore.FullEntity;
 import com.google.cloud.datastore.KeyFactory;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
-import com.google.sps.Puzzle.Difficulty;
 
 /** Puzzle DAO implementation*/
 public class PuzzleDao implements Dao<Puzzle> {
@@ -98,13 +96,7 @@ public class PuzzleDao implements Dao<Puzzle> {
       QueryResults<Entity> tasks = datastore.run(queryBuilder.build());
       while (tasks.hasNext()) {
         Entity task = tasks.next();
-
-        Puzzle puzzle = new Puzzle()
-          .setPuzzleId(task.getKey().getId())
-          .setName(task.getString("name"))
-          .setImageUrl(task.getString("imageUrl"))
-          .setDifficulty(Difficulty.valueOf(task.getString("difficulty")));
-
+        Puzzle puzzle = getPuzzleFrom(task);
         puzzles.add(puzzle);
       }
 

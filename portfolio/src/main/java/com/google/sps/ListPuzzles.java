@@ -1,6 +1,6 @@
 package com.google.sps;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ListPuzzles {
 
