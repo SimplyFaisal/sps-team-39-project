@@ -13,12 +13,11 @@ public class ViewPuzzlePageServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-
     
     String id = request.getParameter("id");
     if(id == null) {
       //if an id was not given
-      response.sendRedirect("viewpuzzle.html");
+      response.sendRedirect("listpuzzles.html");
     }
 
     try {

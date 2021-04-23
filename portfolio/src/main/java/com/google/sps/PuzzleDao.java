@@ -1,12 +1,16 @@
 package com.google.sps;
 
+import java.util.ArrayList;
+
+import com.google.cloud.datastore.Cursor;
 import com.google.cloud.datastore.Datastore;
-import com.google.cloud.datastore.DatastoreException;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
+import com.google.cloud.datastore.EntityQuery;
 import com.google.cloud.datastore.FullEntity;
 import com.google.cloud.datastore.KeyFactory;
-import com.google.sps.Puzzle.Difficulty;
+import com.google.cloud.datastore.Query;
+import com.google.cloud.datastore.QueryResults;
 
 /** Puzzle DAO implementation*/
 public class PuzzleDao implements Dao<Puzzle> {
@@ -66,7 +70,7 @@ public class PuzzleDao implements Dao<Puzzle> {
       //deletes the entity whose id match "puzzleID"
       datastore.delete(keyFactory.newKey(puzzleId));
     }
-
+  
     private Puzzle getPuzzleFrom(Entity entity) {
         return new Puzzle()
             .setPuzzleId(entity.getKey().getId())
@@ -74,5 +78,30 @@ public class PuzzleDao implements Dao<Puzzle> {
             .setDifficulty(Puzzle.Difficulty.valueOf(entity.getString("difficulty")))
             .setName(entity.contains("name") ? entity.getString("name") : "")
             .setUsername(entity.contains("username") ? entity.getString("username") : "");
+    }
+
+    public ListPuzzles listPuzzles(String cursorUrl, int PAGE_SIZE) {
+      //queries the puzzles
+      EntityQuery.Builder queryBuilder = Query.newEntityQueryBuilder()
+        .setKind("Puzzle")
+        .setLimit(PAGE_SIZE);
+
+      if(cursorUrl != null){
+        Cursor pageCursor = Cursor.fromUrlSafe(cursorUrl);
+        queryBuilder.setStartCursor(pageCursor);
+      }        
+      
+      //creates a list of puzzles using the querie results
+      ArrayList<Puzzle> puzzles = new ArrayList<>();
+      QueryResults<Entity> tasks = datastore.run(queryBuilder.build());
+      while (tasks.hasNext()) {
+        Entity task = tasks.next();
+        Puzzle puzzle = getPuzzleFrom(task);
+        puzzles.add(puzzle);
+      }
+
+      //returns a ListPuzzles object containing a list and a cursor url
+      Cursor nextPageCursor = tasks.getCursorAfter();
+      return new ListPuzzles(puzzles, nextPageCursor.toUrlSafe());
     }
 }
