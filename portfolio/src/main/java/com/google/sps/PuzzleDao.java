@@ -105,7 +105,7 @@ public class PuzzleDao implements Dao<Puzzle> {
       }        
       
       //creates a list of puzzles using the querie results
-      ArrayList<Puzzle> puzzles = new ArrayList<Puzzle>();
+      ArrayList<Puzzle> puzzles = new ArrayList<>();
       QueryResults<Entity> tasks = datastore.run(queryBuilder.build());
       while (tasks.hasNext()) {
         Entity task = tasks.next();
