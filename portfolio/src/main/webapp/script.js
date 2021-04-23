@@ -54,6 +54,7 @@ async function requestPuzzle() {
     }
 
     document.getElementById("puzzle-name").innerHTML = `Puzzle – ${responseObject.name}`;
+    document.getElementById("uploader-name").innerHTML = `Uploaded by ${responseObject.username}`;
     document.getElementById("downloadImg").innerHTML = `<a href="${responseObject.imageUrl}">Click here to download image!</a>`;
   }  
 }

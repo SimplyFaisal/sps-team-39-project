@@ -59,6 +59,8 @@ public class CreatePuzzleServlet extends HttpServlet {
 
     String name = request.getParameter("name");
 
+    String username = request.getParameter("username");
+
     // Get the file chosen by the user.
     Part filePart = request.getPart("image");
     String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName() ;
@@ -67,11 +69,11 @@ public class CreatePuzzleServlet extends HttpServlet {
     // Upload the file to blobstore and get its URL.
     String uploadedFileUrl = uploadToCloudStorage(fileName, fileInputStream);
 
-    Puzzle puzzle = new Puzzle();
-
-    puzzle.setImageUrl(uploadedFileUrl);
-    puzzle.setDifficulty(difficulty);
-    puzzle.setName(name);
+    Puzzle puzzle = new Puzzle()
+        .setImageUrl(uploadedFileUrl)
+        .setDifficulty(difficulty)
+        .setName(name)
+        .setUsername(username);
 
     PuzzleDao dao = new PuzzleDao();
 

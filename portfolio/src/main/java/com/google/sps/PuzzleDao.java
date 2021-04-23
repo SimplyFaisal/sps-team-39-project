@@ -33,6 +33,7 @@ public class PuzzleDao implements Dao<Puzzle> {
           .set("imageUrl", puzzle.getImageUrl())
           .set("difficulty", puzzle.getDifficulty().toString())
           .set("name", puzzle.getName())
+          .set("username", puzzle.getUsername())
           .build();
       Entity entity = datastore.put(taskEntity);
 
@@ -52,6 +53,7 @@ public class PuzzleDao implements Dao<Puzzle> {
           .set("imageUrl", puzzle.getImageUrl())
           .set("difficulty", puzzle.getDifficulty().toString())
           .set("name", puzzle.getName())
+          .set("username", puzzle.getUsername())
           .build();
       datastore.update(task);
     }
@@ -61,36 +63,23 @@ public class PuzzleDao implements Dao<Puzzle> {
       //reads the entity whose id match "puzzleID"
       Entity entity = datastore.get(keyFactory.newKey(puzzleId));
 
-      //id was not found
-      if(entity == null) {
-        return null;
-      }
-
-      //saves the retrieved data into a "Puzzle" object
-      Difficulty difficulty = Puzzle.Difficulty.valueOf(entity.getString("difficulty"));
-
-      String name;
-
-      try {
-          name = entity.getString("name");
-      } catch (DatastoreException e) {
-          name = "";
-      }
-
-      Puzzle puzzle = new Puzzle()
-        .setPuzzleId(entity.getKey().getId())
-        .setImageUrl(entity.getString("imageUrl"))
-        .setDifficulty(difficulty)
-        .setName(name);
-
-      //returns the object
-      return puzzle;
+      //Return null if there was no matching entity or the puzzle object
+      return entity != null ? getPuzzleFrom(entity) : null;
     }
 
     @Override
     public void delete(Long puzzleId) {
       //deletes the entity whose id match "puzzleID"
       datastore.delete(keyFactory.newKey(puzzleId));
+    }
+  
+    private Puzzle getPuzzleFrom(Entity entity) {
+        return new Puzzle()
+            .setPuzzleId(entity.getKey().getId())
+            .setImageUrl(entity.getString("imageUrl"))
+            .setDifficulty(Puzzle.Difficulty.valueOf(entity.getString("difficulty")))
+            .setName(entity.contains("name") ? entity.getString("name") : "")
+            .setUsername(entity.contains("username") ? entity.getString("username") : "");
     }
 
     public ListPuzzles listPuzzles(String cursorUrl, int PAGE_SIZE) {
