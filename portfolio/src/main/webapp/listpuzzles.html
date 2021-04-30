@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   </head>
-  <body onload="listPuzzles();">
+  <body onload="nextPage();">
     <div id="content">
       <nav id ="nav-bar" class="navbar navbar-expand-sm navbar-dark" style="background-color: #000000;">
         <div class="container-fluid">
@@ -27,6 +27,20 @@
         
       <div class="container w-100 py-4 row">
       <h1 id="puzzle-name">Puzzles</h1>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text">Difficulty</label>
+        </div>
+        <select class="custom-select" id="difficulty-filter">
+          <option value="ALL">All</option>
+          <option value="EASY">Easy</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HARD">Hard</option></option>
+        </select>
+        <input type="submit" class="btn btn-primary" onclick="filterByDifficulty();" />
+      </div>
+
       <div>
         <table class="table"> 
           <thead>
@@ -43,9 +57,13 @@
           </tbody>
         </table>
       </div>
-      <input type="button" value="Next" class="btn btn-primary" onclick="listPuzzles();" />      
-    </div>
 
+      <div class="page-buttons">
+        <input type="button" value="Prev" class="btn btn-primary" onclick="prevPage();" />  
+        <input type="button" value="Next" class="btn btn-primary" onclick="nextPage();" />
+      </div>
+
+    <script src="paginator.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>   
   </body>

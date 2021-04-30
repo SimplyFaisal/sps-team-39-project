@@ -1,3 +1,7 @@
 #puzzle-table img {
   max-width: 6em;
 }
+
+.page-buttons {
+  text-align: center;
+}
