@@ -11,12 +11,20 @@ import com.google.cloud.datastore.FullEntity;
 import com.google.cloud.datastore.KeyFactory;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
+import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 
 /** Puzzle DAO implementation*/
 public class PuzzleDao implements Dao<Puzzle> {
 
     private Datastore datastore;
     private KeyFactory keyFactory;
+
+    public enum DifficultyFilter{
+      ALL,
+      EASY,
+      MEDIUM,
+      HARD;
+    }
 
     public PuzzleDao() {
       datastore = DatastoreOptions.getDefaultInstance().getService();
@@ -80,12 +88,17 @@ public class PuzzleDao implements Dao<Puzzle> {
             .setUsername(entity.contains("username") ? entity.getString("username") : "");
     }
 
-    public ListPuzzles listPuzzles(String cursorUrl, int PAGE_SIZE) {
+    public ListPuzzles listPuzzles(String cursorUrl, DifficultyFilter filter, int pageSize) {
       //queries the puzzles
       EntityQuery.Builder queryBuilder = Query.newEntityQueryBuilder()
         .setKind("Puzzle")
-        .setLimit(PAGE_SIZE);
-
+        .setLimit(pageSize);
+      
+      //filters by difficulty
+      if(filter != DifficultyFilter.ALL) {
+        queryBuilder.setFilter(PropertyFilter.eq("difficulty", filter.toString()));
+      }
+      
       if(cursorUrl != null){
         Cursor pageCursor = Cursor.fromUrlSafe(cursorUrl);
         queryBuilder.setStartCursor(pageCursor);

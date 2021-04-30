@@ -2,6 +2,7 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import com.google.sps.PuzzleDao;
+import com.google.sps.PuzzleDao.DifficultyFilter;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,8 @@ public class ListPuzzlesServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String cursorUrl = request.getParameter("cursor");
-    String json = gson.toJson(puzzleDao.listPuzzles(cursorUrl, 10));
+    DifficultyFilter difficulty = PuzzleDao.DifficultyFilter.valueOf(request.getParameter("difficulty"));
+    String json = gson.toJson(puzzleDao.listPuzzles(cursorUrl, difficulty, 6));
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
